@@ -1,0 +1,100 @@
+.app {
+  display: grid;
+  grid-template-columns: 260px minmax(0, 1fr);
+  min-height: 100svh;
+  background: #f3f6fb;
+  color: #172033;
+}
+
+.sidebar {
+  border-right: 1px solid #d9e0ec;
+  background: #ffffff;
+  padding: 24px;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px;
+}
+
+.header,
+.weatherPanel {
+  border: 1px solid #d9e0ec;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.header {
+  padding: 20px;
+}
+
+.weatherPanel {
+  display: flex;
+  flex: 1;
+  min-height: 360px;
+  flex-direction: column;
+}
+
+.weatherTabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #d9e0ec;
+  padding: 12px;
+}
+
+.tabButton {
+  min-width: 120px;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  background: transparent;
+  color: #5d6a7f;
+  cursor: pointer;
+  font: inherit;
+  padding: 10px 14px;
+
+  &:hover {
+    background: #eef3fa;
+    color: #172033;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #4f7cff;
+    outline-offset: 2px;
+  }
+}
+
+.active {
+  border-color: #b9c7db;
+  background: #e7eef9;
+  color: #172033;
+}
+
+.content {
+  flex: 1;
+  padding: 20px;
+}
+
+@media (max-width: 760px) {
+  .app {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    border-right: 0;
+    border-bottom: 1px solid #d9e0ec;
+  }
+
+  .main {
+    padding: 16px;
+  }
+
+  .weatherTabs {
+    flex-direction: column;
+  }
+
+  .tabButton {
+    width: 100%;
+  }
+}
