@@ -1,1 +1,1 @@
-export { CurrentWeatherCard } from './CurrentWeatherCard';
+export { CurrentWeather } from './CurrentWeather.tsx';

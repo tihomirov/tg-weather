@@ -1,7 +1,7 @@
 import { useState, type FC } from 'react';
 import {
   CitySearch,
-  CurrentWeatherCard,
+  CurrentWeather,
   FavoritesList,
   Forecast,
 } from './features';
@@ -42,7 +42,7 @@ export const App: FC = () => {
           </div>
 
           <div className={styles.content}>
-            {activeTab === 'current' ? <CurrentWeatherCard /> : <Forecast />}
+            {activeTab === 'current' ? <CurrentWeather /> : <Forecast />}
           </div>
         </section>
       </main>
