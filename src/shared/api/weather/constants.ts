@@ -1,0 +1,2 @@
+export const WEATHER_API_FORECAST_DAYS = 5;
+export const SEARCH_CITY_QUERY_MIN_LENGTH = 2;

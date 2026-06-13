@@ -26,14 +26,14 @@ export const App: FC = () => {
         <section className={styles.weatherPanel}>
           <div className={styles.weatherTabs}>
             <button
-              type="button"
+              type='button'
               className={`${styles.tabButton} ${activeTab === 'current' ? styles.active : ''}`}
               onClick={() => setActiveTab('current')}
             >
               Current
             </button>
             <button
-              type="button"
+              type='button'
               className={`${styles.tabButton} ${activeTab === 'forecast' ? styles.active : ''}`}
               onClick={() => setActiveTab('forecast')}
             >

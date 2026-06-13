@@ -27,6 +27,11 @@ export default defineConfig([
       '@stylistic/semi': ['error', 'always'], // Require semicolons
       '@stylistic/space-before-function-paren': ['error', 'never'], // e.g., function myFunc() {}
       '@stylistic/object-curly-spacing': ['error', 'always'], // e.g., { foo: 'bar' }
+      '@stylistic/quotes': ['error', 'single', {
+        'avoidEscape': true,
+        'allowTemplateLiterals': true
+      }],
+      '@stylistic/jsx-quotes': ['error', 'prefer-single'],
     }
   },
 ])
