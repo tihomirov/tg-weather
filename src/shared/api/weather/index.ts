@@ -12,4 +12,5 @@ export {
   WeatherNotFoundError,
   WeatherRequestError,
   WeatherUnavailableError,
+  isWeatherError,
 } from './errors';

@@ -46,7 +46,7 @@ export const createWeatherApiProvider = (
 
       return mapWeatherApiCities(payload);
     },
-    getCurrentWeather: async(location: City): Promise<CurrentWeather> => {
+    getCurrentWeather: async(location: City, options): Promise<CurrentWeather> => {
       const url = createUrl(`${BASE_URL}/current.json`, {
         key: providerOptions.apiKey,
         q: createLocationQuery(location),
@@ -54,6 +54,7 @@ export const createWeatherApiProvider = (
       });
       const payload = await fetchJson(url, {
         provider: PROVIDER,
+        signal: options?.signal,
       });
 
       return mapWeatherApiCurrentWeather(payload, location);

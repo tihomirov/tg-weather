@@ -42,9 +42,9 @@ export const createWeatherFacade = (
         (provider) => provider.searchCity(query, options),
       );
     },
-    getCurrentWeather: (location) => {
+    getCurrentWeather: (location, options?: WeatherRequestOptions) => {
       return executeWithFallback(
-        (provider) => provider.getCurrentWeather(location),
+        (provider) => provider.getCurrentWeather(location, options),
       );
     },
     getForecast: (location) => {

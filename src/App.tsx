@@ -67,7 +67,11 @@ export const App: FC = () => {
           </div>
 
           <div className={styles.content}>
-            {activeTab === 'current' ? <CurrentWeather /> : <Forecast />}
+            {activeTab === 'current' ? (
+              <CurrentWeather city={selectedCity} />
+            ) : (
+              <Forecast />
+            )}
           </div>
         </section>
       </main>

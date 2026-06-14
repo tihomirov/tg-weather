@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 import type { City } from '../../entities/city/types';
+import { useGetCityRegion } from '../../shared/hooks';
 import styles from './SelectedCity.module.scss';
 
 interface SelectedCityProps {
@@ -8,17 +9,13 @@ interface SelectedCityProps {
   onToggleFavorite: (city: City) => void;
 }
 
-const formatCityMeta = (city: City): string => {
-  return city.region === undefined
-    ? city.country
-    : `${city.region}, ${city.country}`;
-};
-
 export const SelectedCity: FC<SelectedCityProps> = ({
   city,
   isFavorite,
   onToggleFavorite,
 }) => {
+  const getCityRegion = useGetCityRegion();
+
   return (
     <section className={styles.selectedCity}>
       <h2 className={styles.title}>Selected city</h2>
@@ -29,7 +26,7 @@ export const SelectedCity: FC<SelectedCityProps> = ({
         <div className={styles.cityCard}>
           <div>
             <span className={styles.cityName}>{city.name}</span>
-            <span className={styles.cityMeta}>{formatCityMeta(city)}</span>
+            <span className={styles.cityMeta}>{getCityRegion(city)}</span>
           </div>
 
           <button

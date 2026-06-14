@@ -16,13 +16,10 @@ import {
 
 const PROVIDER = 'weather-api';
 
-const normalizeIconUrl = (iconUrl: string | undefined): string | undefined => {
-  if (iconUrl === undefined) {
-    return undefined;
-  }
-
-  return iconUrl.startsWith('//') ? `https:${iconUrl}` : iconUrl;
-};
+const normalizeIconUrl = (iconUrl: string) =>
+  iconUrl.startsWith('//') 
+    ? `https:${iconUrl}`
+    : iconUrl;
 
 const mapWeatherApiCondition = (payload: unknown): WeatherCondition => {
   const condition = requireRecord(payload, PROVIDER, 'weather condition');
@@ -30,7 +27,7 @@ const mapWeatherApiCondition = (payload: unknown): WeatherCondition => {
   return {
     code: requireNumber(condition.code, PROVIDER, 'condition code'),
     text: requireString(condition.text, PROVIDER, 'condition text'),
-    iconUrl: normalizeIconUrl(optionalString(condition.icon)),
+    iconUrl: normalizeIconUrl(requireString(condition.icon, PROVIDER, 'condition icon')),
   };
 };
 
@@ -67,7 +64,7 @@ export const mapWeatherApiCurrentWeather = (
   const location = mapWeatherApiLocation(root.location, fallbackLocation);
 
   return {
-    location,
+    city: location,
     temperatureCelsius: requireNumber(current.temp_c, PROVIDER, 'temperature'),
     condition: mapWeatherApiCondition(current.condition),
     feelsLikeCelsius: optionalNumber(current.feelslike_c),

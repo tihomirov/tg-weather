@@ -13,6 +13,7 @@ import {
   requireRecord,
   requireString,
 } from '../../guards';
+import { mapOpenMeteoWeatherIconUrl } from './openMeteoWeatherIconMapper';
 
 const PROVIDER = 'open-meteo';
 
@@ -47,10 +48,14 @@ const wmoConditions: Record<number, string> = {
   99: 'Thunderstorm with heavy hail',
 };
 
-const mapOpenMeteoCondition = (code: number): WeatherCondition => {
+const mapOpenMeteoCondition = (
+  code: number,
+  isDay = true,
+): WeatherCondition => {
   return {
     code,
     text: wmoConditions[code] ?? 'Unknown conditions',
+    iconUrl: mapOpenMeteoWeatherIconUrl(code, isDay),
   };
 };
 
@@ -88,14 +93,15 @@ export const mapOpenMeteoCurrentWeather = (
   const root = requireRecord(payload, PROVIDER, 'current weather response');
   const current = requireRecord(root.current, PROVIDER, 'current weather');
   const weatherCode = requireNumber(current.weather_code, PROVIDER, 'weather code');
+  const isDay = optionalNumber(current.is_day) !== 0;
 
   return {
-    location: {
+    city: {
       ...location,
       timezone: optionalString(root.timezone) ?? location.timezone,
     },
     temperatureCelsius: requireNumber(current.temperature_2m, PROVIDER, 'temperature'),
-    condition: mapOpenMeteoCondition(weatherCode),
+    condition: mapOpenMeteoCondition(weatherCode, isDay),
     feelsLikeCelsius: optionalNumber(current.apparent_temperature),
     humidityPercent: optionalNumber(current.relative_humidity_2m),
     windKph: optionalNumber(current.wind_speed_10m),

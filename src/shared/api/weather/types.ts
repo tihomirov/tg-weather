@@ -12,7 +12,7 @@ export interface WeatherRequestOptions {
 
 export interface WeatherService {
   searchCity(query: string, options?: WeatherRequestOptions): Promise<City[]>;
-  getCurrentWeather(location: City): Promise<CurrentWeather>;
+  getCurrentWeather(location: City, options?: WeatherRequestOptions): Promise<CurrentWeather>;
   getForecast(location: City): Promise<WeatherForecast>;
 }
 

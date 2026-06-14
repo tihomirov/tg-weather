@@ -1,0 +1,51 @@
+.currentWeather {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.message,
+.error {
+  border-radius: 6px;
+  margin: 0;
+  padding: 14px;
+}
+
+.message {
+  background: #eef3fa;
+  color: #5d6a7f;
+}
+
+.error {
+  background: #fff0f0;
+  color: #9f2020;
+}
+
+.summary {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+}
+
+.conditionIcon {
+  height: 64px;
+  width: 64px;
+}
+
+.condition {
+  display: flex;
+  flex-direction: column;
+}
+
+.metrics {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  margin: 0;
+}
+
+.metric {
+  border: 1px solid #d9e0ec;
+  border-radius: 8px;
+  padding: 14px;
+}

@@ -7,9 +7,9 @@ export interface WeatherCondition {
 }
 
 export interface CurrentWeather {
-  location: City;
-  temperatureCelsius: number;
+  city: City;
   condition: WeatherCondition;
+  temperatureCelsius: number;
   feelsLikeCelsius?: number;
   humidityPercent?: number;
   windKph?: number;
