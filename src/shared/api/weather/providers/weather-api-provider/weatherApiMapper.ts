@@ -25,7 +25,6 @@ const mapWeatherApiCondition = (payload: unknown): WeatherCondition => {
   const condition = requireRecord(payload, PROVIDER, 'weather condition');
 
   return {
-    code: requireNumber(condition.code, PROVIDER, 'condition code'),
     text: requireString(condition.text, PROVIDER, 'condition text'),
     iconUrl: normalizeIconUrl(requireString(condition.icon, PROVIDER, 'condition icon')),
   };

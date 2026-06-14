@@ -38,7 +38,6 @@ describe('weatherApiMapper', () => {
     expect(weather).toStrictEqual({
       temperatureCelsius: 21.6,
       condition: {
-        code: 1000,
         text: 'Sunny',
         iconUrl: 'https://cdn.weatherapi.com/weather/64x64/day/113.png',
       },
@@ -74,7 +73,6 @@ describe('weatherApiMapper', () => {
         {
           date: '2026-06-14',
           condition: {
-            code: 1003,
             text: 'Partly cloudy',
             iconUrl: 'https://cdn.weatherapi.com/weather/64x64/day/116.png',
           },

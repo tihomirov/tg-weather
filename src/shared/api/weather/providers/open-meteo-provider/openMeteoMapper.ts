@@ -53,7 +53,6 @@ const mapOpenMeteoCondition = (
   isDay = true,
 ): WeatherCondition => {
   return {
-    code,
     text: wmoConditions[code] ?? 'Unknown conditions',
     iconUrl: mapOpenMeteoWeatherIconUrl(code, isDay),
   };

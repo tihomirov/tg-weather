@@ -25,7 +25,6 @@ const forecast = {
     {
       date: '2026-06-14',
       condition: {
-        code: 1000,
         text: 'Sunny',
         iconUrl: 'https://example.com/sunny.svg',
       },
@@ -35,7 +34,6 @@ const forecast = {
     {
       date: '2026-06-15',
       condition: {
-        code: 1003,
         text: 'Partly cloudy',
       },
       minTemperatureCelsius: 16.4,

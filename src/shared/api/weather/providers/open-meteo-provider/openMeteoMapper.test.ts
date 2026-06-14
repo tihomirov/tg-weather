@@ -26,7 +26,6 @@ describe('openMeteoMapper', () => {
     expect(weather).toStrictEqual({
       temperatureCelsius: 21.6,
       condition: {
-        code: 0,
         text: 'Clear sky',
         iconUrl: mapOpenMeteoWeatherIconUrl(0, true),
       },
@@ -52,7 +51,6 @@ describe('openMeteoMapper', () => {
         {
           date: '2026-06-14',
           condition: {
-            code: 1,
             text: 'Mainly clear',
             iconUrl: mapOpenMeteoWeatherIconUrl(1),
           },

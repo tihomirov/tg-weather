@@ -1,5 +1,4 @@
 export interface WeatherCondition {
-  code: number;
   text: string;
   iconUrl?: string;
 }
