@@ -3,3 +3,4 @@ export { CurrentWeather } from './current-weather';
 export { FavoritesList, useFavorites } from './favorites-list';
 export { Forecast } from './forecast';
 export { SelectedCity } from './selected-city';
+export { WeatherContent } from './weather-content';

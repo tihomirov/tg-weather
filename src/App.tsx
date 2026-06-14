@@ -1,19 +1,15 @@
 import { useState, type FC } from 'react';
 import {
   CitySearch,
-  CurrentWeather,
   FavoritesList,
-  Forecast,
   SelectedCity,
+  WeatherContent,
   useFavorites,
 } from './features';
 import type { City } from './entities/city/types';
 import styles from './App.module.scss';
 
-type WeatherTab = 'current' | 'forecast';
-
 export const App: FC = () => {
-  const [activeTab, setActiveTab] = useState<WeatherTab>('current');
   const [selectedCity, setSelectedCity] = useState<City | null>(null);
   const {
     favorites,
@@ -49,30 +45,7 @@ export const App: FC = () => {
         </header>
 
         <section className={styles.weatherPanel}>
-          <div className={styles.weatherTabs}>
-            <button
-              type='button'
-              className={`${styles.tabButton} ${activeTab === 'current' ? styles.active : ''}`}
-              onClick={() => setActiveTab('current')}
-            >
-              Current
-            </button>
-            <button
-              type='button'
-              className={`${styles.tabButton} ${activeTab === 'forecast' ? styles.active : ''}`}
-              onClick={() => setActiveTab('forecast')}
-            >
-              Forecast
-            </button>
-          </div>
-
-          <div className={styles.content}>
-            {activeTab === 'current' ? (
-              <CurrentWeather city={selectedCity} />
-            ) : (
-              <Forecast />
-            )}
-          </div>
+          <WeatherContent city={selectedCity} />
         </section>
       </main>
     </div>

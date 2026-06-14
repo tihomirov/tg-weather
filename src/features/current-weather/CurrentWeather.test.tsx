@@ -43,13 +43,6 @@ describe('CurrentWeather', () => {
     cleanup();
   });
 
-  it('renders an empty state when no city is selected', () => {
-    render(<CurrentWeather city={null} />);
-
-    expect(screen.getByText('Select a city to view current weather.')).toBeInTheDocument();
-    expect(getCurrentWeatherMock).not.toHaveBeenCalled();
-  });
-
   it('renders a loading state while current weather is pending', () => {
     getCurrentWeatherMock.mockReturnValue(new Promise(() => {}));
 

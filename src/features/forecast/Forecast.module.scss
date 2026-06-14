@@ -1,0 +1,80 @@
+.forecast {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.message,
+.error {
+  border-radius: 6px;
+  margin: 0;
+  padding: 12px;
+}
+
+.message {
+  background: #eef3fa;
+  color: #5d6a7f;
+}
+
+.error {
+  background: #fff0f0;
+  color: #9f2020;
+}
+
+.summary {
+  display: flex;
+  justify-content: space-between;
+}
+
+.summary h2 {
+  margin: 0;
+}
+
+.days {
+  display: grid;
+  gap: 12px;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+}
+
+.day {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border: 1px solid #d9e0ec;
+  border-radius: 8px;
+  padding: 12px;
+}
+
+.dayHeader {
+  display: flex;
+  min-height: 48px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.dayHeader h3 {
+  margin: 0;
+}
+
+.conditionIcon {
+  height: 48px;
+  width: 48px;
+}
+
+.condition {
+  margin: 0;
+  color: #5d6a7f;
+}
+
+.temperatures {
+  display: grid;
+  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.temperatures div {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}

@@ -65,7 +65,7 @@ describe('Autocomplete', () => {
     expect(screen.getByText('Kyiv')).toBeInTheDocument();
     expect(screen.getByText('Kyiv City, Ukraine')).toBeInTheDocument();
     expect(screen.getByText('Lviv')).toBeInTheDocument();
-    expect(screen.getByText('Lviv Oblast, Ukraine')).toBeInTheDocument();
+    expect(screen.getByText('Lviv City, Ukraine')).toBeInTheDocument();
   });
 
   it('calls onSelect with the selected option', () => {

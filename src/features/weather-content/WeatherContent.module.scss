@@ -1,0 +1,50 @@
+.weatherTabs {
+  display: flex;
+  gap: 8px;
+  border-bottom: 1px solid #d9e0ec;
+  padding: 12px;
+}
+
+.tabButton {
+  border: 1px solid transparent;
+  border-radius: 8px;
+  color: #5d6a7f;
+  cursor: pointer;
+  font: inherit;
+  padding: 12px;
+
+  &:hover {
+    background: #eef3fa;
+    color: #172033;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #4f7cff;
+    outline-offset: 2px;
+  }
+}
+
+.active {
+  background: #e7eef9;
+}
+
+.emptyMessage {
+  border-radius: 6px;
+  margin: auto;
+  color: #5d6a7f;
+  padding: 12px;
+}
+
+.content {
+  padding: 14px;
+}
+
+@media (max-width: 760px) {
+  .weatherTabs {
+    flex-direction: column;
+  }
+
+  .tabButton {
+    width: 100%;
+  }
+}

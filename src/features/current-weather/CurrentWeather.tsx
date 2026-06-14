@@ -1,16 +1,22 @@
-import { type FC } from 'react';
+import { type FC, Suspense, useMemo } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
 import type { City } from '../../entities/city/types';
-import { CurrentWeatherEmpty } from './CurrentWeatherStates';
-import { CityCurrentWeather } from './CityCurrentWeather.tsx';
+import { weatherService } from '../../shared/api/weather';
+import { CurrentWeatherContent } from './CurrentWeatherContent.tsx';
+import { CurrentWeatherError, CurrentWeatherLoading } from './CurrentWeatherStates';
 
 type CurrentWeatherProps = {
-  city: City | null;
+  city: City;
 };
 
 export const CurrentWeather: FC<CurrentWeatherProps> = ({ city }) => {
-  if (!city) {
-    return <CurrentWeatherEmpty />;
-  }
+  const weatherPromise = useMemo(() => weatherService.getCurrentWeather(city), [city]);
 
-  return <CityCurrentWeather city={city} />;
+  return (
+    <ErrorBoundary fallback={<CurrentWeatherError />}>
+      <Suspense fallback={<CurrentWeatherLoading />}>
+        <CurrentWeatherContent city={city} weatherPromise={weatherPromise} />
+      </Suspense>
+    </ErrorBoundary>
+  );
 };
