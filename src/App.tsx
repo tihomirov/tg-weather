@@ -4,18 +4,42 @@ import {
   CurrentWeather,
   FavoritesList,
   Forecast,
+  useFavorites,
 } from './features';
+import type { City } from './entities/city/types';
 import styles from './App.module.scss';
 
 type WeatherTab = 'current' | 'forecast';
 
 export const App: FC = () => {
   const [activeTab, setActiveTab] = useState<WeatherTab>('current');
+  const [selectedFavoriteCity, setSelectedFavoriteCity] = useState<City | null>(null);
+  const {
+    favorites,
+    isLoading: isFavoritesLoading,
+    error: favoritesError,
+    removeFavorite,
+  } = useFavorites();
+
+  const handleRemoveFavorite = (cityId: string) => {
+    if (selectedFavoriteCity?.id === cityId) {
+      setSelectedFavoriteCity(null);
+    }
+
+    void removeFavorite(cityId);
+  };
 
   return (
     <div className={styles.app}>
       <aside className={styles.sidebar}>
-        <FavoritesList />
+        <FavoritesList
+          favorites={favorites}
+          isLoading={isFavoritesLoading}
+          error={favoritesError}
+          selectedCityId={selectedFavoriteCity?.id}
+          onSelectCity={setSelectedFavoriteCity}
+          onRemoveCity={handleRemoveFavorite}
+        />
       </aside>
 
       <main className={styles.main}>

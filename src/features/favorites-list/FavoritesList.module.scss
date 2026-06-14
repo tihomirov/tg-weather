@@ -1,0 +1,88 @@
+.favorites {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.title {
+  color: #172033;
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.message,
+.error {
+  border-radius: 6px;
+  font-size: 14px;
+  line-height: 1.45;
+  margin: 0;
+  padding: 12px;
+}
+
+.list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 36px;
+  gap: 8px;
+}
+
+.cityButton,
+.removeButton {
+  border: 1px solid #fff;
+  border-radius: 6px;
+  background: #fff;
+  color: #172033;
+  cursor: pointer;
+  font: inherit;
+
+  &:hover {
+    background: #eef3fa;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #4f7cff;
+    outline-offset: 2px;
+  }
+}
+
+.cityButton {
+  min-width: 0;
+  padding: 10px 12px;
+  text-align: left;
+}
+
+.selected {
+  border-color: #90a7c9;
+  background: #e7eef9;
+}
+
+.cityName,
+.cityMeta {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cityMeta {
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.removeButton {
+  align-items: center;
+  display: inline-flex;
+  height: 100%;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0;
+}
