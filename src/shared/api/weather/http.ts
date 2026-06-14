@@ -1,5 +1,6 @@
 import {
   WeatherError,
+  WeatherAbortError,
   WeatherInvalidResponseError,
   WeatherRequestError,
 } from './errors';
@@ -9,6 +10,7 @@ import type {
 
 interface FetchJsonOptions {
   provider: WeatherProviderName;
+  signal?: AbortSignal;
 }
 
 export const createUrl = (
@@ -29,7 +31,9 @@ export const fetchJson = async(
   options: FetchJsonOptions,
 ): Promise<unknown> => {
   try {
-    const response = await fetch(url);
+    const response = await fetch(url, {
+      signal: options.signal,
+    });
 
     if (!response.ok) {
       throw new WeatherRequestError(
@@ -40,6 +44,14 @@ export const fetchJson = async(
 
     return await response.json();
   } catch(error) {
+    if (error instanceof DOMException && error.name === 'AbortError') {
+      throw new WeatherAbortError(
+        `${options.provider} request was aborted.`,
+        options.provider,
+        error,
+      );
+    }
+
     if (error instanceof WeatherError) {
       throw error;
     }

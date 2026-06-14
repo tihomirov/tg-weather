@@ -1,0 +1,75 @@
+.selectedCity {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  border-bottom: 1px solid #d9e0ec;
+  padding-bottom: 20px;
+}
+
+.title {
+  font-size: 18px;
+  font-weight: 700;
+  margin: 0;
+}
+
+.empty {
+  border-radius: 6px;
+  color: #5d6a7f;
+  font-size: 14px;
+  margin: 0;
+  padding: 12px;
+}
+
+.cityCard {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 40px;
+  gap: 10px;
+  align-items: center;
+}
+
+.cityName,
+.cityMeta {
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.cityName {
+  color: #172033;
+  font-weight: 700;
+}
+
+.cityMeta {
+  color: #5d6a7f;
+  font-size: 13px;
+  margin-top: 2px;
+}
+
+.favoriteButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: 1px solid #c6d1df;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #7a879b;
+  cursor: pointer;
+  font-size: 22px;
+  padding: 0;
+
+  &:hover {
+    background: #eef3fa;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #4f7cff;
+    outline-offset: 2px;
+  }
+}
+
+.favoriteButtonActive {
+  color: #172033;
+}

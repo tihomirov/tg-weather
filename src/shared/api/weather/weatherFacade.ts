@@ -4,6 +4,7 @@ import {
   type WeatherProviderFailure,
 } from './errors';
 import type {
+  WeatherRequestOptions,
   WeatherProvider,
   WeatherService,
 } from './types';
@@ -36,9 +37,9 @@ export const createWeatherFacade = (
   };
 
   return {
-    searchCity: (query) => {
+    searchCity: (query, options?: WeatherRequestOptions) => {
       return executeWithFallback(
-        (provider) => provider.searchCity(query),
+        (provider) => provider.searchCity(query, options),
       );
     },
     getCurrentWeather: (location) => {

@@ -6,8 +6,12 @@ import type {
 
 export type WeatherProviderName = 'open-meteo' | 'weather-api';
 
+export interface WeatherRequestOptions {
+  signal?: AbortSignal;
+}
+
 export interface WeatherService {
-  searchCity(query: string): Promise<City[]>;
+  searchCity(query: string, options?: WeatherRequestOptions): Promise<City[]>;
   getCurrentWeather(location: City): Promise<CurrentWeather>;
   getForecast(location: City): Promise<WeatherForecast>;
 }

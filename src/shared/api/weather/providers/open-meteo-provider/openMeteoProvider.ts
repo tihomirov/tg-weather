@@ -36,7 +36,7 @@ const dailyFields = [
 export const createOpenMeteoProvider = (): WeatherProvider => {
   return {
     name: PROVIDER,
-    searchCity: async(query: string): Promise<City[]> => {
+    searchCity: async(query: string, options): Promise<City[]> => {
       const trimmedQuery = query.trim();
 
       if (trimmedQuery.length < SEARCH_CITY_QUERY_MIN_LENGTH) {
@@ -51,6 +51,7 @@ export const createOpenMeteoProvider = (): WeatherProvider => {
       });
       const payload = await fetchJson(url, {
         provider: PROVIDER,
+        signal: options?.signal,
       });
 
       return mapOpenMeteoCities(payload);

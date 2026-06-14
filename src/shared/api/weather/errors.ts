@@ -1,6 +1,7 @@
 import type { WeatherProviderName } from './types';
 
 export type WeatherErrorCode =
+  | 'abort-request'
   | 'configuration'
   | 'invalid-response'
   | 'not-found'
@@ -67,6 +68,20 @@ export class WeatherRequestError extends WeatherError {
     });
 
     this.name = 'WeatherRequestError';
+  }
+}
+
+export class WeatherAbortError extends WeatherError {
+  constructor(message: string, provider?: WeatherProviderName, cause?: unknown) {
+    super({
+      code: 'abort-request',
+      message,
+      provider,
+      cause,
+      allowsFallback: false,
+    });
+
+    this.name = 'WeatherAbortError';
   }
 }
 

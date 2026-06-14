@@ -24,11 +24,11 @@ const createLocationQuery = (location: City): string => {
 };
 
 export const createWeatherApiProvider = (
-  options: WeatherApiProviderOptions,
+  providerOptions: WeatherApiProviderOptions,
 ): WeatherProvider => {
   return {
     name: PROVIDER,
-    searchCity: async(query: string): Promise<City[]> => {
+    searchCity: async(query: string, options): Promise<City[]> => {
       const trimmedQuery = query.trim();
 
       if (trimmedQuery.length < SEARCH_CITY_QUERY_MIN_LENGTH) {
@@ -36,18 +36,19 @@ export const createWeatherApiProvider = (
       }
 
       const url = createUrl(`${BASE_URL}/search.json`, {
-        key: options.apiKey,
+        key: providerOptions.apiKey,
         q: trimmedQuery,
       });
       const payload = await fetchJson(url, {
         provider: PROVIDER,
+        signal: options?.signal,
       });
 
       return mapWeatherApiCities(payload);
     },
     getCurrentWeather: async(location: City): Promise<CurrentWeather> => {
       const url = createUrl(`${BASE_URL}/current.json`, {
-        key: options.apiKey,
+        key: providerOptions.apiKey,
         q: createLocationQuery(location),
         aqi: 'no',
       });
@@ -59,7 +60,7 @@ export const createWeatherApiProvider = (
     },
     getForecast: async(location: City): Promise<WeatherForecast> => {
       const url = createUrl(`${BASE_URL}/forecast.json`, {
-        key: options.apiKey,
+        key: providerOptions.apiKey,
         q: createLocationQuery(location),
         days: WEATHER_API_FORECAST_DAYS,
         aqi: 'no',

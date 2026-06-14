@@ -20,7 +20,7 @@ export const FavoritesList: FC<FavoritesListProps> = ({
   onRemoveCity,
 }) => {
   return (
-    <section className={styles.favorites} aria-label='Favorite cities'>
+    <section className={styles.favorites}>
       <h2 className={styles.title}>Favorite cities</h2>
 
       {isLoading && (
@@ -50,7 +50,6 @@ export const FavoritesList: FC<FavoritesListProps> = ({
                 <button
                   type='button'
                   className={`${styles.cityButton} ${isSelected ? styles.selected : ''}`}
-                  aria-pressed={isSelected}
                   onClick={() => onSelectCity(favorite)}
                 >
                   <span className={styles.cityName}>{favorite.name}</span>
@@ -60,7 +59,6 @@ export const FavoritesList: FC<FavoritesListProps> = ({
                 <button
                   type='button'
                   className={styles.removeButton}
-                  aria-label={`Remove ${favorite.name} from favorites`}
                   onClick={() => onRemoveCity(favorite.id)}
                 >
                   &times;

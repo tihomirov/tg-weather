@@ -4,6 +4,7 @@ import {
   CurrentWeather,
   FavoritesList,
   Forecast,
+  SelectedCity,
   useFavorites,
 } from './features';
 import type { City } from './entities/city/types';
@@ -13,38 +14,38 @@ type WeatherTab = 'current' | 'forecast';
 
 export const App: FC = () => {
   const [activeTab, setActiveTab] = useState<WeatherTab>('current');
-  const [selectedFavoriteCity, setSelectedFavoriteCity] = useState<City | null>(null);
+  const [selectedCity, setSelectedCity] = useState<City | null>(null);
   const {
     favorites,
     isLoading: isFavoritesLoading,
     error: favoritesError,
     removeFavorite,
+    isCityFavorite,
+    toggleFavorite,
   } = useFavorites();
-
-  const handleRemoveFavorite = (cityId: string) => {
-    if (selectedFavoriteCity?.id === cityId) {
-      setSelectedFavoriteCity(null);
-    }
-
-    void removeFavorite(cityId);
-  };
 
   return (
     <div className={styles.app}>
       <aside className={styles.sidebar}>
+        <SelectedCity
+          city={selectedCity}
+          isFavorite={selectedCity !== null && isCityFavorite(selectedCity.id)}
+          onToggleFavorite={toggleFavorite}
+        />
+
         <FavoritesList
           favorites={favorites}
           isLoading={isFavoritesLoading}
           error={favoritesError}
-          selectedCityId={selectedFavoriteCity?.id}
-          onSelectCity={setSelectedFavoriteCity}
-          onRemoveCity={handleRemoveFavorite}
+          selectedCityId={selectedCity?.id}
+          onSelectCity={setSelectedCity}
+          onRemoveCity={cityId => removeFavorite(cityId)}
         />
       </aside>
 
       <main className={styles.main}>
         <header className={styles.header}>
-          <CitySearch />
+          <CitySearch onSelectCity={setSelectedCity} />
         </header>
 
         <section className={styles.weatherPanel}>

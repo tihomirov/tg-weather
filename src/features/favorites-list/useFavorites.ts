@@ -37,11 +37,25 @@ export const useFavorites = () => {
     }
   }, []);
 
+  const isCityFavorite = useCallback((cityId: string) => {
+    return favorites.some((favorite) => favorite.id === cityId);
+  }, [favorites]);
+
+  const toggleFavorite = useCallback((city: City) => {
+    if (isCityFavorite(city.id)) {
+      void removeFavorite(city.id);
+    } else {
+      void addFavorite(city);
+    }
+  }, [addFavorite, isCityFavorite, removeFavorite]);
+
   return {
     favorites,
     isLoading,
     error,
     addFavorite,
     removeFavorite,
+    isCityFavorite,
+    toggleFavorite,
   };
 };
