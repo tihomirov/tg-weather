@@ -20,8 +20,7 @@ const city: City = {
   longitude: 30.5234,
 };
 
-const currentWeather: CurrentWeatherEntity = {
-  city,
+const currentWeather = {
   condition: {
     code: 1000,
     text: 'Sunny',
@@ -31,7 +30,7 @@ const currentWeather: CurrentWeatherEntity = {
   feelsLikeCelsius: 20.4,
   humidityPercent: 58,
   windKph: 14.7,
-};
+} satisfies CurrentWeatherEntity;
 
 const getCurrentWeatherMock = vi.mocked(weatherService.getCurrentWeather);
 

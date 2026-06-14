@@ -67,28 +67,27 @@ export const mapOpenMeteoCities = (payload: unknown): City[] => {
   }
 
   return requireArray(root.results, PROVIDER, 'geocoding results').map((result) => {
-    const location = requireRecord(result, PROVIDER, 'geocoding result');
-    const name = requireString(location.name, PROVIDER, 'city name');
-    const latitude = requireNumber(location.latitude, PROVIDER, 'city latitude');
-    const longitude = requireNumber(location.longitude, PROVIDER, 'city longitude');
-    const id = optionalNumber(location.id)?.toString() ?? `${name}-${latitude}-${longitude}`;
+    const cityResult = requireRecord(result, PROVIDER, 'geocoding result');
+    const name = requireString(cityResult.name, PROVIDER, 'city name');
+    const latitude = requireNumber(cityResult.latitude, PROVIDER, 'city latitude');
+    const longitude = requireNumber(cityResult.longitude, PROVIDER, 'city longitude');
+    const id = requireNumber(cityResult.id, PROVIDER, 'city id').toString();
 
     return {
       id,
       name,
       latitude,
       longitude,
-      country: optionalString(location.country) ?? optionalString(location.country_code) ?? 'Unknown country',
-      countryCode: optionalString(location.country_code),
-      region: optionalString(location.admin1),
-      timezone: optionalString(location.timezone),
+      country: optionalString(cityResult.country) ?? optionalString(cityResult.country_code) ?? 'Unknown country',
+      countryCode: optionalString(cityResult.country_code),
+      region: optionalString(cityResult.admin1),
+      timezone: optionalString(cityResult.timezone),
     };
   });
 };
 
 export const mapOpenMeteoCurrentWeather = (
   payload: unknown,
-  location: City,
 ): CurrentWeather => {
   const root = requireRecord(payload, PROVIDER, 'current weather response');
   const current = requireRecord(root.current, PROVIDER, 'current weather');
@@ -96,10 +95,6 @@ export const mapOpenMeteoCurrentWeather = (
   const isDay = optionalNumber(current.is_day) !== 0;
 
   return {
-    city: {
-      ...location,
-      timezone: optionalString(root.timezone) ?? location.timezone,
-    },
     temperatureCelsius: requireNumber(current.temperature_2m, PROVIDER, 'temperature'),
     condition: mapOpenMeteoCondition(weatherCode, isDay),
     feelsLikeCelsius: optionalNumber(current.apparent_temperature),
@@ -118,7 +113,6 @@ const readRequiredNumber = (
 
 export const mapOpenMeteoForecast = (
   payload: unknown,
-  location: City,
 ): WeatherForecast => {
   const root = requireRecord(payload, PROVIDER, 'forecast response');
   const daily = requireRecord(root.daily, PROVIDER, 'daily forecast');
@@ -139,10 +133,6 @@ export const mapOpenMeteoForecast = (
   });
 
   return {
-    location: {
-      ...location,
-      timezone: optionalString(root.timezone) ?? location.timezone,
-    },
     days,
   };
 };

@@ -19,8 +19,8 @@ interface WeatherApiProviderOptions {
   apiKey: string;
 }
 
-const createLocationQuery = (location: City): string => {
-  return `${location.latitude},${location.longitude}`;
+const createCityQuery = (city: City): string => {
+  return `${city.latitude},${city.longitude}`;
 };
 
 export const createWeatherApiProvider = (
@@ -46,10 +46,10 @@ export const createWeatherApiProvider = (
 
       return mapWeatherApiCities(payload);
     },
-    getCurrentWeather: async(location: City, options): Promise<CurrentWeather> => {
+    getCurrentWeather: async(city: City, options): Promise<CurrentWeather> => {
       const url = createUrl(`${BASE_URL}/current.json`, {
         key: providerOptions.apiKey,
-        q: createLocationQuery(location),
+        q: createCityQuery(city),
         aqi: 'no',
       });
       const payload = await fetchJson(url, {
@@ -57,12 +57,12 @@ export const createWeatherApiProvider = (
         signal: options?.signal,
       });
 
-      return mapWeatherApiCurrentWeather(payload, location);
+      return mapWeatherApiCurrentWeather(payload);
     },
-    getForecast: async(location: City): Promise<WeatherForecast> => {
+    getForecast: async(city: City): Promise<WeatherForecast> => {
       const url = createUrl(`${BASE_URL}/forecast.json`, {
         key: providerOptions.apiKey,
-        q: createLocationQuery(location),
+        q: createCityQuery(city),
         days: WEATHER_API_FORECAST_DAYS,
         aqi: 'no',
         alerts: 'no',
@@ -71,7 +71,7 @@ export const createWeatherApiProvider = (
         provider: PROVIDER,
       });
 
-      return mapWeatherApiForecast(payload, location);
+      return mapWeatherApiForecast(payload);
     },
   };
 };

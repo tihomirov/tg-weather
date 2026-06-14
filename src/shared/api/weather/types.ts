@@ -12,8 +12,8 @@ export interface WeatherRequestOptions {
 
 export interface WeatherService {
   searchCity(query: string, options?: WeatherRequestOptions): Promise<City[]>;
-  getCurrentWeather(location: City, options?: WeatherRequestOptions): Promise<CurrentWeather>;
-  getForecast(location: City): Promise<WeatherForecast>;
+  getCurrentWeather(city: City, options?: WeatherRequestOptions): Promise<CurrentWeather>;
+  getForecast(city: City): Promise<WeatherForecast>;
 }
 
 export interface WeatherProvider extends WeatherService {

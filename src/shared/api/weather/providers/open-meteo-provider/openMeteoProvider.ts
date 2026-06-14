@@ -56,10 +56,10 @@ export const createOpenMeteoProvider = (): WeatherProvider => {
 
       return mapOpenMeteoCities(payload);
     },
-    getCurrentWeather: async(location: City, options): Promise<CurrentWeather> => {
+    getCurrentWeather: async(city: City, options): Promise<CurrentWeather> => {
       const url = createUrl(FORECAST_URL, {
-        latitude: location.latitude,
-        longitude: location.longitude,
+        latitude: city.latitude,
+        longitude: city.longitude,
         current: currentFields,
         timezone: 'auto',
       });
@@ -68,12 +68,12 @@ export const createOpenMeteoProvider = (): WeatherProvider => {
         signal: options?.signal,
       });
 
-      return mapOpenMeteoCurrentWeather(payload, location);
+      return mapOpenMeteoCurrentWeather(payload);
     },
-    getForecast: async(location: City): Promise<WeatherForecast> => {
+    getForecast: async(city: City): Promise<WeatherForecast> => {
       const url = createUrl(FORECAST_URL, {
-        latitude: location.latitude,
-        longitude: location.longitude,
+        latitude: city.latitude,
+        longitude: city.longitude,
         daily: dailyFields,
         timezone: 'auto',
         forecast_days: WEATHER_API_FORECAST_DAYS,
@@ -82,7 +82,7 @@ export const createOpenMeteoProvider = (): WeatherProvider => {
         provider: PROVIDER,
       });
 
-      return mapOpenMeteoForecast(payload, location);
+      return mapOpenMeteoForecast(payload);
     },
   };
 };

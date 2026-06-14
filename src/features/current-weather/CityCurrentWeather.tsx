@@ -20,7 +20,7 @@ export const CityCurrentWeather: FC<CityCurrentWeather> = ({
       fallback={<CurrentWeatherError />}
     >
       <Suspense fallback={<CurrentWeatherLoading />}>
-        <CurrentWeatherContent weatherPromise={weatherPromise} />
+        <CurrentWeatherContent city={city} weatherPromise={weatherPromise} />
       </Suspense>
     </ErrorBoundary>
   );

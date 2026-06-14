@@ -1,5 +1,3 @@
-import type { City } from '../city/types';
-
 export interface WeatherCondition {
   code: number;
   text: string;
@@ -7,7 +5,6 @@ export interface WeatherCondition {
 }
 
 export interface CurrentWeather {
-  city: City;
   condition: WeatherCondition;
   temperatureCelsius: number;
   feelsLikeCelsius?: number;
@@ -23,6 +20,5 @@ export interface DailyWeatherForecast {
 }
 
 export interface WeatherForecast {
-  location: City;
   days: DailyWeatherForecast[];
 }
