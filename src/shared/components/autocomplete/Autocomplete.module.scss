@@ -16,16 +16,46 @@
   border: 1px solid styles.$color-subtle;
   border-radius: styles.$radius;
   background: styles.$color-surface;
-  padding: styles.$space-3;
+  padding: styles.$space-3 40px styles.$space-3 styles.$space-3;
 
   &:focus {
     @include styles.focus-ring(0);
   }
 }
 
+.inputWrapper {
+  position: relative;
+}
+
+.clearButton {
+  position: absolute;
+  top: 50%;
+  right: styles.$space-2;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: transparent;
+  color: styles.$color-text-muted;
+  cursor: pointer;
+  transform: translateY(-50%);
+
+  &:hover,
+  &:focus-visible {
+    background: styles.$color-subtle;
+    color: styles.$color-text;
+  }
+
+  &:focus-visible {
+    @include styles.focus-ring(0);
+  }
+}
+
 .status,
 .error {
+  padding: styles.$space-2;
   margin-top: styles.$space-2;
+  border-radius: styles.$radius;
+  border: 1px solid styles.$color-surface;
 }
 
 .status {

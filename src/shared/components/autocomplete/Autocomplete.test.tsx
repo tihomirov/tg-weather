@@ -68,6 +68,30 @@ describe('Autocomplete', () => {
     expect(screen.getByText('Lviv City, Ukraine')).toBeInTheDocument();
   });
 
+  it('closes options when clicking outside and reopens them on focus', () => {
+    render(<Autocomplete {...defaultProps} />);
+
+    expect(screen.getByText('Kyiv')).toBeInTheDocument();
+
+    fireEvent.pointerDown(document.body);
+
+    expect(screen.queryByText('Kyiv')).not.toBeInTheDocument();
+
+    fireEvent.focus(screen.getByPlaceholderText('Enter city name'));
+
+    expect(screen.getByText('Kyiv')).toBeInTheDocument();
+  });
+
+  it('clears the input when the clear button is clicked', () => {
+    const onChange = vi.fn();
+
+    render(<Autocomplete {...defaultProps} value='Ky' onChange={onChange} />);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Clear search' }));
+
+    expect(onChange).toHaveBeenCalledWith('');
+  });
+
   it('calls onSelect with the selected option', () => {
     const onSelect = vi.fn();
 

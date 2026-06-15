@@ -1,4 +1,5 @@
-import { type ChangeEvent } from 'react';
+import { type ChangeEvent, useRef, useState } from 'react';
+import { useClickOutside } from '../../hooks';
 import styles from './Autocomplete.module.scss';
 
 interface AutocompleteOption {
@@ -34,21 +35,45 @@ export const Autocomplete = <TOption extends AutocompleteOption>({
   getOptionLabel,
   getOptionDescription,
 }: AutocompleteProps<TOption>) => {
-  const shouldShowOptions = !!options?.length;
+  const autocompleteRef = useRef<HTMLDivElement>(null);
+  const [isOpen, setIsOpen] = useState(true);
+  const shouldShowOptions = isOpen && !!options?.length;
+  const shouldShowClearButton = value.length > 0;
+
+  useClickOutside(autocompleteRef, () => setIsOpen(false));
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setIsOpen(true);
     onChange(event.target.value);
   };
 
+  const handleClear = () => {
+    setIsOpen(false);
+    onChange('');
+  };
+
   return (
-    <div className={styles.autocomplete}>
+    <div className={styles.autocomplete} ref={autocompleteRef}>
       <label className={styles.label}>{label}</label>
-      <input
-        className={styles.input}
-        value={value}
-        placeholder={placeholder}
-        onChange={handleChange}
-      />
+      <div className={styles.inputWrapper}>
+        <input
+          className={styles.input}
+          value={value}
+          placeholder={placeholder}
+          onChange={handleChange}
+          onFocus={() => setIsOpen(true)}
+        />
+        {shouldShowClearButton && (
+          <button
+            type='button'
+            className={styles.clearButton}
+            aria-label='Clear search'
+            onClick={handleClear}
+          >
+            &times;
+          </button>
+        )}
+      </div>
       {isLoading && <p className={styles.status}>{loadingMessage}</p>}
       {error && <p className={styles.error}>{error}</p>}
       {options?.length === 0 && <p className={styles.status}>{emptyMessage}</p>}
