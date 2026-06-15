@@ -1,29 +1,22 @@
+@use '../../shared/styles' as styles;
+
 .currentWeather {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-}
-
-.message,
-.error {
-  border-radius: 6px;
-  margin: 0;
-  padding: 14px;
+  gap: styles.$space-4;
 }
 
 .message {
-  background: #eef3fa;
-  color: #5d6a7f;
+  @include styles.message-box;
 }
 
 .error {
-  background: #fff0f0;
-  color: #9f2020;
+  @include styles.error-box;
 }
 
 .summary {
   display: flex;
-  gap: 16px;
+  gap: styles.$space-3;
   justify-content: space-between;
 }
 
@@ -39,13 +32,13 @@
 
 .metrics {
   display: grid;
-  gap: 12px;
+  gap: styles.$space-3;
   grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
   margin: 0;
 }
 
 .metric {
-  border: 1px solid #d9e0ec;
-  border-radius: 8px;
-  padding: 14px;
+  border: 1px solid styles.$color-subtle;
+  border-radius: styles.$radius;
+  padding: styles.$space-3;
 }

@@ -1,24 +1,17 @@
+@use '../../shared/styles' as styles;
+
 .forecast {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-}
-
-.message,
-.error {
-  border-radius: 6px;
-  margin: 0;
-  padding: 12px;
+  gap: styles.$space-4;
 }
 
 .message {
-  background: #eef3fa;
-  color: #5d6a7f;
+  @include styles.message-box;
 }
 
 .error {
-  background: #fff0f0;
-  color: #9f2020;
+  @include styles.error-box;
 }
 
 .summary {
@@ -32,17 +25,17 @@
 
 .days {
   display: grid;
-  gap: 12px;
+  gap: styles.$space-3;
   grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
 }
 
 .day {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  border: 1px solid #d9e0ec;
-  border-radius: 8px;
-  padding: 12px;
+  gap: styles.$space-3;
+  border: 1px solid styles.$color-subtle;
+  border-radius: styles.$radius;
+  padding: styles.$space-3;
 }
 
 .dayHeader {
@@ -50,7 +43,7 @@
   min-height: 48px;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 12px;
+  gap: styles.$space-3;
 }
 
 .dayHeader h3 {
@@ -64,17 +57,17 @@
 
 .condition {
   margin: 0;
-  color: #5d6a7f;
+  color: styles.$color-text-muted;
 }
 
 .temperatures {
   display: grid;
-  gap: 10px;
+  gap: styles.$space-2;
   grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .temperatures div {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: styles.$space-1;
 }

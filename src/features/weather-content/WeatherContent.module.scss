@@ -1,45 +1,46 @@
+@use '../../shared/styles' as styles;
+
 .weatherTabs {
   display: flex;
-  gap: 8px;
-  border-bottom: 1px solid #d9e0ec;
-  padding: 12px;
+  gap: styles.$space-2;
+  border-bottom: 1px solid styles.$color-subtle;
+  padding: styles.$space-3;
 }
 
 .tabButton {
   border: 1px solid transparent;
-  border-radius: 8px;
-  color: #5d6a7f;
+  border-radius: styles.$radius;
+  color: styles.$color-text-muted;
   cursor: pointer;
   font: inherit;
-  padding: 12px;
+  padding: styles.$space-3;
 
   &:hover {
-    background: #eef3fa;
-    color: #172033;
+    background: styles.$color-subtle;
+    color: styles.$color-text;
   }
 
   &:focus-visible {
-    outline: 2px solid #4f7cff;
-    outline-offset: 2px;
+    @include styles.focus-ring;
   }
 }
 
 .active {
-  background: #e7eef9;
+  background: styles.$color-subtle;
 }
 
 .emptyMessage {
-  border-radius: 6px;
+  border-radius: styles.$radius;
   margin: auto;
-  color: #5d6a7f;
-  padding: 12px;
+  color: styles.$color-text-muted;
+  padding: styles.$space-3;
 }
 
 .content {
-  padding: 14px;
+  padding: styles.$space-3;
 }
 
-@media (max-width: 760px) {
+@media (max-width: styles.$breakpoint-sm) {
   .weatherTabs {
     flex-direction: column;
   }

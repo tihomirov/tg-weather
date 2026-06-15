@@ -1,29 +1,30 @@
+@use '../../shared/styles' as styles;
+
 .favorites {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: styles.$space-3;
 }
 
 .title {
-  color: #172033;
+  color: styles.$color-text;
   font-size: 18px;
   font-weight: 700;
   margin: 0;
 }
 
-.message,
+.message {
+  @include styles.message-box;
+}
+
 .error {
-  border-radius: 6px;
-  font-size: 14px;
-  line-height: 1.45;
-  margin: 0;
-  padding: 12px;
+  @include styles.error-box;
 }
 
 .list {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: styles.$space-2;
   list-style: none;
   margin: 0;
   padding: 0;
@@ -32,50 +33,48 @@
 .item {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 36px;
-  gap: 8px;
+  gap: styles.$space-2;
 }
 
 .cityButton,
 .removeButton {
-  border: 1px solid #fff;
-  border-radius: 6px;
-  background: #fff;
-  color: #172033;
+  border: 1px solid styles.$color-surface;
+  border-radius: styles.$radius;
+  background: styles.$color-surface;
+  color: styles.$color-text;
   cursor: pointer;
   font: inherit;
 
   &:hover {
-    background: #eef3fa;
+    background: styles.$color-subtle;
   }
 
   &:focus-visible {
-    outline: 2px solid #4f7cff;
-    outline-offset: 2px;
+    @include styles.focus-ring;
   }
 }
 
 .cityButton {
   min-width: 0;
-  padding: 10px 12px;
+  padding: styles.$space-2 styles.$space-3;
   text-align: left;
 }
 
 .selected {
-  border-color: #90a7c9;
-  background: #e7eef9;
+  border-color: styles.$color-subtle;
+  background: styles.$color-subtle;
 }
 
 .cityName,
 .cityMeta {
   display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+
+  @include styles.truncate;
 }
 
 .cityMeta {
   font-size: 13px;
-  margin-top: 2px;
+  margin-top: styles.$space-1;
 }
 
 .removeButton {

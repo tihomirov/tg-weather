@@ -1,9 +1,11 @@
+@use '../../shared/styles' as styles;
+
 .selectedCity {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  border-bottom: 1px solid #d9e0ec;
-  padding-bottom: 20px;
+  gap: styles.$space-3;
+  border-bottom: 1px solid styles.$color-subtle;
+  padding-bottom: styles.$space-4;
 }
 
 .title {
@@ -13,37 +15,35 @@
 }
 
 .empty {
-  border-radius: 6px;
-  color: #5d6a7f;
+  @include styles.notice-box;
+
+  color: styles.$color-text-muted;
   font-size: 14px;
-  margin: 0;
-  padding: 12px;
 }
 
 .cityCard {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 40px;
-  gap: 10px;
+  gap: styles.$space-2;
   align-items: center;
 }
 
 .cityName,
 .cityMeta {
   display: block;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+
+  @include styles.truncate;
 }
 
 .cityName {
-  color: #172033;
+  color: styles.$color-text;
   font-weight: 700;
 }
 
 .cityMeta {
-  color: #5d6a7f;
+  color: styles.$color-text-muted;
   font-size: 13px;
-  margin-top: 2px;
+  margin-top: styles.$space-1;
 }
 
 .favoriteButton {
@@ -52,24 +52,23 @@
   justify-content: center;
   width: 40px;
   height: 40px;
-  border: 1px solid #c6d1df;
-  border-radius: 6px;
-  background: #ffffff;
-  color: #7a879b;
+  border: 1px solid styles.$color-subtle;
+  border-radius: styles.$radius;
+  background: styles.$color-surface;
+  color: styles.$color-text-muted;
   cursor: pointer;
   font-size: 22px;
   padding: 0;
 
   &:hover {
-    background: #eef3fa;
+    background: styles.$color-subtle;
   }
 
   &:focus-visible {
-    outline: 2px solid #4f7cff;
-    outline-offset: 2px;
+    @include styles.focus-ring;
   }
 }
 
 .favoriteButtonActive {
-  color: #172033;
+  color: styles.$color-text;
 }

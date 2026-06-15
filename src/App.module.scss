@@ -1,36 +1,38 @@
+@use './shared/styles' as styles;
+
 .app {
   display: grid;
   grid-template-columns: 260px minmax(0, 1fr);
   min-height: 100svh;
-  background: #f3f6fb;
-  color: #172033;
+  background: styles.$color-background;
+  color: styles.$color-text;
 }
 
 .sidebar {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  border-right: 1px solid #d9e0ec;
-  background: #ffffff;
-  padding: 24px;
+  gap: styles.$space-4;
+  border-right: 1px solid styles.$color-subtle;
+  background: styles.$color-surface;
+  padding: styles.$space-4;
 }
 
 .main {
   display: flex;
   flex-direction: column;
-  gap: 20px;
-  padding: 24px;
+  gap: styles.$space-4;
+  padding: styles.$space-4;
 }
 
 .header,
 .weatherPanel {
-  border: 1px solid #d9e0ec;
-  border-radius: 8px;
-  background: #ffffff;
+  border: 1px solid styles.$color-subtle;
+  border-radius: styles.$radius;
+  background: styles.$color-surface;
 }
 
 .header {
-  padding: 20px;
+  padding: styles.$space-4;
 }
 
 .weatherPanel {
@@ -39,17 +41,17 @@
   flex-direction: column;
 }
 
-@media (max-width: 760px) {
+@media (max-width: styles.$breakpoint-sm) {
   .app {
     grid-template-columns: 1fr;
   }
 
   .sidebar {
     border-right: 0;
-    border-bottom: 1px solid #d9e0ec;
+    border-bottom: 1px solid styles.$color-subtle;
   }
 
   .main {
-    padding: 16px;
+    padding: styles.$space-3;
   }
 }

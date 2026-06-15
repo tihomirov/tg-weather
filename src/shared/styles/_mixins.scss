@@ -1,0 +1,32 @@
+@use 'tokens';
+
+@mixin focus-ring($offset: 2px) {
+  outline: 2px solid tokens.$color-focus;
+  outline-offset: $offset;
+}
+
+@mixin truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+@mixin notice-box {
+  border-radius: tokens.$radius;
+  margin: 0;
+  padding: tokens.$space-3;
+}
+
+@mixin message-box {
+  @include notice-box;
+
+  background: tokens.$color-subtle;
+  color: tokens.$color-text-muted;
+}
+
+@mixin error-box {
+  @include notice-box;
+
+  background: tokens.$color-background;
+  color: tokens.$color-error-text;
+}
