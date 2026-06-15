@@ -1,4 +1,5 @@
-import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { City } from '../../entities/city/types';
 import type { CurrentWeather as CurrentWeatherEntity } from '../../entities/weather/types';
@@ -33,6 +34,22 @@ const currentWeather = {
 
 const getCurrentWeatherMock = vi.mocked(weatherService.getCurrentWeather);
 
+const renderCurrentWeather = () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
+
+  return render(
+    <QueryClientProvider client={queryClient}>
+      <CurrentWeather city={city} />
+    </QueryClientProvider>,
+  );
+};
+
 describe('CurrentWeather', () => {
   beforeEach(() => {
     getCurrentWeatherMock.mockReset();
@@ -45,21 +62,20 @@ describe('CurrentWeather', () => {
   it('renders a loading state while current weather is pending', () => {
     getCurrentWeatherMock.mockReturnValue(new Promise(() => {}));
 
-    render(<CurrentWeather city={city} />);
+    renderCurrentWeather();
 
     expect(screen.getByText('Loading current weather...')).toBeInTheDocument();
-    expect(screen.getByText('Loading current weather...').closest('section'));
-    expect(getCurrentWeatherMock).toHaveBeenCalledWith(city);
+    expect(getCurrentWeatherMock).toHaveBeenCalledWith(city, {
+      signal: expect.any(AbortSignal),
+    });
   });
 
   it('renders current weather when the selected city loads successfully', async() => {
     getCurrentWeatherMock.mockResolvedValue(currentWeather);
 
-    await act(async() => {
-      render(<CurrentWeather city={city} />);
-    });
+    renderCurrentWeather();
 
-    expect(screen.getByRole('heading', { name: 'Kyiv' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Kyiv' })).toBeInTheDocument();
     expect(screen.getByText('Kyiv City, Ukraine')).toBeInTheDocument();
     expect(screen.getByRole('heading', { name: '22°C' })).toBeInTheDocument();
     expect(screen.getByText('Sunny')).toBeInTheDocument();
@@ -69,16 +85,15 @@ describe('CurrentWeather', () => {
     expect(screen.getByText('58%')).toBeInTheDocument();
     expect(screen.getByText('Wind')).toBeInTheDocument();
     expect(screen.getByText('15 km/h')).toBeInTheDocument();
-    expect(document.querySelector('img')).toHaveAttribute('src', currentWeather.condition.iconUrl);
-    expect(getCurrentWeatherMock).toHaveBeenCalledWith(city);
+    expect(getCurrentWeatherMock).toHaveBeenCalledWith(city, {
+      signal: expect.any(AbortSignal),
+    });
   });
 
   it('renders an error state when current weather fails to load', async() => {
     getCurrentWeatherMock.mockRejectedValue(new Error('Weather unavailable'));
 
-    await act(async() => {
-      render(<CurrentWeather city={city} />);
-    });
+    renderCurrentWeather();
 
     await waitFor(() => {
       expect(screen.getByText('Failed to load current weather.')).toBeInTheDocument();

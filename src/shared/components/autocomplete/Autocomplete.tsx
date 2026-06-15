@@ -52,6 +52,11 @@ export const Autocomplete = <TOption extends AutocompleteOption>({
     onChange('');
   };
 
+  const onSelectOption = (option: TOption) => {
+    onSelect(option);
+    setIsOpen(false);
+  };
+
   return (
     <div className={styles.autocomplete} ref={autocompleteRef}>
       <label className={styles.label}>{label}</label>
@@ -88,7 +93,7 @@ export const Autocomplete = <TOption extends AutocompleteOption>({
                 <button
                   type='button'
                   className={styles.optionButton}
-                  onClick={() => onSelect(option)}
+                  onClick={() => onSelectOption(option)}
                 >
                   <span className={styles.optionLabel}>{getOptionLabel(option)}</span>
                   <span className={styles.optionDescription}>{optionDescription}</span>

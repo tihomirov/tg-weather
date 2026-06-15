@@ -70,7 +70,7 @@ export const createOpenMeteoProvider = (): WeatherProvider => {
 
       return mapOpenMeteoCurrentWeather(payload);
     },
-    getForecast: async(city: City): Promise<WeatherForecast> => {
+    getForecast: async(city: City, options): Promise<WeatherForecast> => {
       const url = createUrl(FORECAST_URL, {
         latitude: city.latitude,
         longitude: city.longitude,
@@ -80,6 +80,7 @@ export const createOpenMeteoProvider = (): WeatherProvider => {
       });
       const payload = await fetchJson(url, {
         provider: PROVIDER,
+        signal: options?.signal,
       });
 
       return mapOpenMeteoForecast(payload);

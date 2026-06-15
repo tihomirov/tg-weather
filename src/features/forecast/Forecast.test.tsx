@@ -1,4 +1,5 @@
-import { act, cleanup, render, screen, waitFor } from '@testing-library/react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { cleanup, render, screen, waitFor } from '@testing-library/react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import type { City } from '../../entities/city/types';
 import type { WeatherForecast } from '../../entities/weather/types';
@@ -44,6 +45,22 @@ const forecast = {
 
 const getForecastMock = vi.mocked(weatherService.getForecast);
 
+const renderForecast = () => {
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: false,
+      },
+    },
+  });
+
+  return render(
+    <QueryClientProvider client={queryClient}>
+      <Forecast city={city} />
+    </QueryClientProvider>,
+  );
+};
+
 describe('Forecast', () => {
   beforeEach(() => {
     getForecastMock.mockReset();
@@ -56,20 +73,20 @@ describe('Forecast', () => {
   it('renders a loading state while forecast is pending', () => {
     getForecastMock.mockReturnValue(new Promise(() => {}));
 
-    render(<Forecast city={city} />);
+    renderForecast();
 
     expect(screen.getByText('Loading forecast...')).toBeInTheDocument();
-    expect(getForecastMock).toHaveBeenCalledWith(city);
+    expect(getForecastMock).toHaveBeenCalledWith(city, {
+      signal: expect.any(AbortSignal),
+    });
   });
 
   it('renders forecast days when the selected city loads successfully', async() => {
     getForecastMock.mockResolvedValue(forecast);
 
-    await act(async() => {
-      render(<Forecast city={city} />);
-    });
+    renderForecast();
 
-    expect(screen.getByRole('heading', { name: 'Kyiv forecast' })).toBeInTheDocument();
+    expect(await screen.findByRole('heading', { name: 'Kyiv forecast' })).toBeInTheDocument();
     expect(screen.getByText('Jun 14')).toBeInTheDocument();
     expect(screen.getByText('Sunny')).toBeInTheDocument();
     expect(screen.getByText('26°C')).toBeInTheDocument();
@@ -79,15 +96,15 @@ describe('Forecast', () => {
     expect(screen.getByText('23°C')).toBeInTheDocument();
     expect(screen.getByText('16°C')).toBeInTheDocument();
     expect(document.querySelector('img')).toHaveAttribute('src', forecast.days[0].condition.iconUrl);
-    expect(getForecastMock).toHaveBeenCalledWith(city);
+    expect(getForecastMock).toHaveBeenCalledWith(city, {
+      signal: expect.any(AbortSignal),
+    });
   });
 
   it('renders an error state when forecast fails to load', async() => {
     getForecastMock.mockRejectedValue(new Error('Forecast unavailable'));
 
-    await act(async() => {
-      render(<Forecast city={city} />);
-    });
+    renderForecast();
 
     await waitFor(() => {
       expect(screen.getByText('Failed to load forecast.')).toBeInTheDocument();

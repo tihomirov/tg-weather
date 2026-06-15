@@ -1,22 +1,39 @@
-import { type FC, Suspense, useMemo } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
+import { type FC } from 'react';
 import type { City } from '../../entities/city/types';
-import { weatherService } from '../../shared/api/weather';
-import { ForecastContent } from './ForecastContent';
 import { ForecastError, ForecastLoading } from './ForecastStates';
+import { ForecastContentItem } from './ForecastContentItem.tsx';
+import { useForecast } from './useForecast';
+import styles from './Forecast.module.scss';
 
 interface ForecastProps {
   city: City;
 }
 
 export const Forecast: FC<ForecastProps> = ({ city }) => {
-  const forecastPromise = useMemo(() => weatherService.getForecast(city), [city]);
+  const forecastQuery = useForecast(city);
+
+  if (forecastQuery.isLoading) {
+    return <ForecastLoading />;
+  }
+
+  if (forecastQuery.isError || !forecastQuery.data) {
+    return <ForecastError />;
+  }
 
   return (
-    <ErrorBoundary fallback={<ForecastError />}>
-      <Suspense fallback={<ForecastLoading />}>
-        <ForecastContent city={city} forecastPromise={forecastPromise} />
-      </Suspense>
-    </ErrorBoundary>
+    <section className={styles.forecast}>
+      <div className={styles.summary}>
+        <h2>{city.name} forecast</h2>
+      </div>
+
+      <div className={styles.days}>
+        {forecastQuery.data.days.map(day => (
+          <ForecastContentItem
+            key={day.date}
+            day={day}
+          />
+        ))}
+      </div>
+    </section>
   );
 };

@@ -47,9 +47,9 @@ export const createWeatherFacade = (
         (provider) => provider.getCurrentWeather(city, options),
       );
     },
-    getForecast: (city) => {
+    getForecast: (city, options?: WeatherRequestOptions) => {
       return executeWithFallback(
-        (provider) => provider.getForecast(city),
+        (provider) => provider.getForecast(city, options),
       );
     },
   };

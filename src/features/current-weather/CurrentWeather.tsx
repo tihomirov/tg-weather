@@ -1,22 +1,32 @@
-import { type FC, Suspense, useMemo } from 'react';
-import { ErrorBoundary } from 'react-error-boundary';
+import { type FC } from 'react';
 import type { City } from '../../entities/city/types';
-import { weatherService } from '../../shared/api/weather';
-import { CurrentWeatherContent } from './CurrentWeatherContent.tsx';
 import { CurrentWeatherError, CurrentWeatherLoading } from './CurrentWeatherStates';
+import { useCurrentWeather } from './useCurrentWeather.ts';
+import { CurrentWeatherSummary } from './CurrentWeatherSummary.tsx';
+import { CurrentWeatherCondition } from './CurrentWeatherCondition.tsx';
+import { CurrentWeatherMetrics } from './CurrentWeatherMetrics.tsx';
+import styles from './CurrentWeather.module.scss';
 
 type CurrentWeatherProps = {
   city: City;
 };
 
 export const CurrentWeather: FC<CurrentWeatherProps> = ({ city }) => {
-  const weatherPromise = useMemo(() => weatherService.getCurrentWeather(city), [city]);
+  const weatherQuery = useCurrentWeather(city);
+
+  if (weatherQuery.isLoading) {
+    return <CurrentWeatherLoading />;
+  }
+
+  if (weatherQuery.isError || !weatherQuery.data) {
+    return <CurrentWeatherError />;
+  }
 
   return (
-    <ErrorBoundary fallback={<CurrentWeatherError />}>
-      <Suspense fallback={<CurrentWeatherLoading />}>
-        <CurrentWeatherContent city={city} weatherPromise={weatherPromise} />
-      </Suspense>
-    </ErrorBoundary>
+    <section className={styles.currentWeather}>
+      <CurrentWeatherSummary city={city} weather={weatherQuery.data} />
+      <CurrentWeatherCondition weather={weatherQuery.data} />
+      <CurrentWeatherMetrics weather={weatherQuery.data} />
+    </section>
   );
 };
