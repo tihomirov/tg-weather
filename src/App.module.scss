@@ -43,6 +43,7 @@
 
 @media (max-width: styles.$breakpoint-sm) {
   .app {
+    align-content: start;
     grid-template-columns: 1fr;
   }
 
