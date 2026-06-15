@@ -9,7 +9,7 @@ React application that shows the current weather for a selected city.
 2. Go to the project directory. 
 3. Switch to the Node.js version specified in this project's(see .nvmrc). You can do this by running `nvm use` command.
 4. Install dependencies. Run `npm install`.
-5. Start dev mode. Run `npm run dev`(or `npm run preview` to locally preview the production build).
+5. Start dev mode. Run `npm run dev`(or `npm run build` and then `npm run preview` to locally preview the production build).
 
 By default [open-meteo](https://open-meteo.com/en/docs) API is used. It does not required any API keys.
 You can provide VITE_WEATHER_API_KEY env variable to use [WeatherAPI](https://www.weatherapi.com/docs/) as a fallback.
