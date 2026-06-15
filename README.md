@@ -1,73 +1,32 @@
-# React + TypeScript + Vite
+# TG Weather
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React application that shows the current weather for a selected city.
+(React + TypeScript + Vite template was used to create this app).
 
-Currently, two official plugins are available:
+## How to run
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+1. Clone this project.
+2. Go to the project directory. 
+3. Switch to the Node.js version specified in this project's(see .nvmrc). You can do this by running `nvm use` command.
+4. Install dependencies. Run `npm install`.
+5. Start dev mode. Run `npm run dev`(or `npm run preview` to locally preview the production build).
 
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+By default [open-meteo](https://open-meteo.com/en/docs) API is used. It does not required any API keys.
+You can provide VITE_WEATHER_API_KEY env variable to use [WeatherAPI](https://www.weatherapi.com/docs/) as a fallback.
+To do this just create a .env.local file and add VITE_WEATHER_API_KEY there:
+```
+VITE_WEATHER_API_KEY=xxxxxxxxx
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+If VITE_WEATHER_API_KEY provided [WeatherAPI](https://www.weatherapi.com/docs/) will be used if main provider is unavailable.
+You can change priority of providers by reordering it in `createWeatherFacade` function:
+```typescript
+export const weatherService = createWeatherFacade(
+  [
+    createOpenMeteoProvider(), // main provider
+    WEATHER_API_KEY && createWeatherApiProvider({ // fallback provider if API key is added
+      apiKey: WEATHER_API_KEY,
+    }),
+  ].filter(Boolean),
+);
 ```
