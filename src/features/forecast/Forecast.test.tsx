@@ -12,7 +12,7 @@ vi.mock('../../shared/api/weather', () => ({
 }));
 
 const city: City = {
-  id: 'kyiv',
+  id: '1',
   name: 'Kyiv',
   country: 'Ukraine',
   region: 'Kyiv City',

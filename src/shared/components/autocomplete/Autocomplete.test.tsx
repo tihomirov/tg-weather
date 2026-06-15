@@ -10,12 +10,12 @@ interface TestOption {
 
 const options: TestOption[] = [
   {
-    id: 'kyiv',
+    id: '1',
     name: 'Kyiv',
     description: 'Kyiv City, Ukraine',
   },
   {
-    id: 'lviv',
+    id: '2',
     name: 'Lviv',
     description: 'Lviv City, Ukraine',
   },
