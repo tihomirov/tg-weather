@@ -52,8 +52,5 @@ export const createLocalStorageFavoritesRepository = (): FavoritesRepository => 
         readFavorites().filter((favorite) => favorite.id !== cityId),
       );
     },
-    exists: async(cityId) => {
-      return readFavorites().some((favorite) => favorite.id === cityId);
-    },
   };
 };
