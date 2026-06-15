@@ -1,5 +1,6 @@
 import type { FC } from 'react';
 import type { City } from '../../entities/city/types';
+import { FavoritesListItem } from './FavoritesListItem.tsx';
 import styles from './FavoritesList.module.scss';
 
 interface FavoritesListProps {
@@ -31,41 +32,23 @@ export const FavoritesList: FC<FavoritesListProps> = ({
         <p className={styles.error}>{error}</p>
       ) : null}
 
-      {favorites.length === 0 && !isLoading && (
+      {favorites.length === 0 && (
         <p className={styles.message}>
           No favorite cities yet.
         </p>
       )}
 
-      {favorites.length > 0 && !isLoading && (
+      {favorites.length > 0 && (
         <ul className={styles.list}>
-          {favorites.map((favorite) => {
-            const isSelected = selectedCityId === favorite.id;
-            const cityMeta = favorite.region === undefined
-              ? favorite.country
-              : `${favorite.region}, ${favorite.country}`;
-
-            return (
-              <li className={styles.item} key={favorite.id}>
-                <button
-                  type='button'
-                  className={`${styles.cityButton} ${isSelected ? styles.selected : ''}`}
-                  onClick={() => onSelectCity(favorite)}
-                >
-                  <span className={styles.cityName}>{favorite.name}</span>
-                  <span className={styles.cityMeta}>{cityMeta}</span>
-                </button>
-
-                <button
-                  type='button'
-                  className={styles.removeButton}
-                  onClick={() => onRemoveCity(favorite.id)}
-                >
-                  &times;
-                </button>
-              </li>
-            );
-          })}
+          {favorites.map((favorite) => (
+            <FavoritesListItem 
+              key={favorite.id} 
+              city={favorite} 
+              onSelectCity={onSelectCity}
+              selectedCityId={selectedCityId} 
+              onRemoveCity={onRemoveCity}
+            />
+          ))}
         </ul>
       )}
     </section>
